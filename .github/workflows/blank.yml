@@ -9,4 +9,4 @@ jobs:
       - name: Print Secret
         run: echo "The secret key is set!"
         env:
-          MY_SECRET: ${{ secrets.NAMEhow t }}
+          MY_SECRET: ${{ secrets.NAME }}
