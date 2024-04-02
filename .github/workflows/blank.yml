@@ -7,6 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print Secret
-        run: echo "The secret key is set!"
+        run: |
+          if [[ "${{ secrets.NAME }}" == *Rohit* ]]; then
+            echo "Yes"
+          else
+            echo "No"
+          fi
         env:
           MY_SECRET: ${{ secrets.NAME }}
