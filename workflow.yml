@@ -1,0 +1,12 @@
+name: Print Secrets
+on:
+  workflow_dispatch:
+
+jobs:
+  print_secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Secret
+        run: echo "The secret key is set!"
+        env:
+          MY_SECRET: ${{ secrets.NAMEhow t }}
