@@ -3,7 +3,7 @@ kind: Template
 metadata:
   name: my-new-template
   title: My New Template
-  description: Template for creating a new service
+  description: Template for creating a new project
 spec:
   owner: team-name
   type: service
@@ -12,7 +12,7 @@ spec:
       name: Fetch Base Repository
       action: git:clone
       input:
-        url: https://github.com/my-org/base-repo.git
+        url: https://github.com/your-org/base-repo.git
         targetPath: ./workspace
     - id: fill-placeholders
       name: Fill Placeholders
@@ -20,10 +20,10 @@ spec:
       input:
         templatePath: ./workspace
         values:
-          name: {{parameters.name}}
-          description: {{parameters.description}}
+          name: {{ parameters.name }}
+          description: {{ parameters.description }}
   parameters:
-    - title: Service Name
+    - title: Project Name
       required: true
       type: string
       name: name
