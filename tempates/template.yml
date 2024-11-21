@@ -1,0 +1,33 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: my-new-template
+  title: My New Template
+  description: Template for creating a new service
+spec:
+  owner: team-name
+  type: service
+  steps:
+    - id: fetch-repo
+      name: Fetch Base Repository
+      action: git:clone
+      input:
+        url: https://github.com/my-org/base-repo.git
+        targetPath: ./workspace
+    - id: fill-placeholders
+      name: Fill Placeholders
+      action: cookiecutter:run
+      input:
+        templatePath: ./workspace
+        values:
+          name: {{parameters.name}}
+          description: {{parameters.description}}
+  parameters:
+    - title: Service Name
+      required: true
+      type: string
+      name: name
+    - title: Description
+      required: true
+      type: string
+      name: description
