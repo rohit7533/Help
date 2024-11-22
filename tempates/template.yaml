@@ -1,87 +1,40 @@
-apiVersion: scaffolder.backstage.io/v1beta3
-kind: Template
+apiVersion: backstage.io/v1alpha1
+kind: Component
 metadata:
-  name: docs-template
-  title: Documentation Template
-  description: Create a new standalone documentation project
+  name: artist-lookup
+  description: Artist Lookup
   tags:
-    - recommended
-    - techdocs
-    - mkdocs
+    - java
+    - data
+  links:
+    - url: https://example.com/user
+      title: Examples Users
+      icon: user
+    - url: https://example.com/group
+      title: Example Group
+      icon: group
+    - url: https://example.com/cloud
+      title: Link with Cloud Icon
+      icon: cloud
+    - url: https://example.com/dashboard
+      title: Dashboard
+      icon: dashboard
+    - url: https://example.com/help
+      title: Support
+      icon: help
+    - url: https://example.com/web
+      title: Website
+      icon: web
+    - url: https://example.com/alert
+      title: Alerts
+      icon: alert
+  annotations:
+    backstage.io/source-template: template:default/springboot-template
+    backstage.io/linguist: 'https://github.com/backstage/backstage/tree/master/plugins/playlist'
 spec:
-  owner: backstage/techdocs-core
-  type: documentation
-
-  parameters:
-    - title: Fill in some steps
-      required:
-        - name
-        - description
-      properties:
-        name:
-          title: Name
-          type: string
-          description: Unique name of the component
-          ui:field: EntityNamePicker
-          ui:autofocus: true
-        description:
-          title: Description
-          type: string
-          description: A description for the component
-        owner:
-          title: Owner
-          type: string
-          description: Owner of the component
-          ui:field: OwnerPicker
-          ui:options:
-            allowedKinds:
-              - Group
-    - title: Choose a location
-      required:
-        - repoUrl
-      properties:
-        repoUrl:
-          title: Repository Location
-          type: string
-          ui:field: RepoUrlPicker
-          ui:options:
-            allowedHosts:
-              - github.com
-
-  # This template is meant to be used on top of an existing template.
-  # By adding the following and fetching from an absolute URL you can
-  # add in the docs template
-  steps:
-    - id: fetch
-      name: Template Docs Skeleton
-      action: fetch:template
-      input:
-        url: ./skeleton
-        values:
-          name: ${{ parameters.name }}
-          description: ${{ parameters.description }}
-          destination: ${{ parameters.repoUrl | parseRepoUrl }}
-          owner: ${{ parameters.owner }}
-
-    - id: publish
-      name: Publish
-      action: publish:github
-      input:
-        allowedHosts: ["github.com"]
-        description: This is ${{ parameters.name }}
-        repoUrl: ${{ parameters.repoUrl }}
-
-    - id: register
-      name: Register
-      action: catalog:register
-      input:
-        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
-        catalogInfoPath: "/catalog-info.yaml"
-
-  output:
-    links:
-      - title: Repository
-        url: ${{ steps.publish.output.remoteUrl }}
-      - title: Open in catalog
-        icon: catalog
-        entityRef: ${{ steps.register.output.entityRef }}
+  type: service
+  lifecycle: experimental
+  owner: team-a
+  system: artist-engagement-portal
+  dependsOn: ['resource:artists-db']
+  apiConsumedBy: ['component:www-artist']
